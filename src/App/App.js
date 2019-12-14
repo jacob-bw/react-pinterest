@@ -4,6 +4,7 @@ import firebaseConnection from '../helpers/data/connection';
 import './App.scss';
 
 import Auth from '../components/Auth/Auth';
+import MyNavbar from '../components/MyNavBar/MyNavBar';
 
 firebaseConnection.firebaseApp();
 
@@ -31,6 +32,7 @@ class App extends React.Component {
 
     return (
     <div className="App">
+      <MyNavbar authed={authed} />
       <button className="btn btn-primary">React Pinterest</button>
     {
       (authed) ? (<div>You Logged In</div>) : (<Auth />)
