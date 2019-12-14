@@ -1,9 +1,15 @@
 import React from 'react';
+import propTypes from 'prop-types';
 
 import authData from '../../helpers/data/authData';
+import Board from '../Board/Board';
 import boardData from '../../helpers/data/boardData';
 
 class BoardsContainer extends React.Component {
+  static propTypes = {
+    setSingleBoard: propTypes.func,
+  }
+
   state ={
     boards: [],
   }
@@ -17,7 +23,12 @@ class BoardsContainer extends React.Component {
   }
 
   render() {
-    return (<div>{this.state.boards.map((board) => <h6>{board.name}</h6>)}</div>);
+    const { setSingleBoard } = this.props;
+
+    return (
+    <div>
+      {this.state.boards.map((board) => (<Board key={board.id} board={board} setSingleBoard={setSingleBoard}/>))}
+    </div>);
   }
 }
 
