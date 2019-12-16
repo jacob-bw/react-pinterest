@@ -2,6 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import boardData from '../../helpers/data/boardData';
 
+// pins render within singleBoard
+// pins will be in state
 
 class SingleBoard extends React.Component {
   static propTypes = {
