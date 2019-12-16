@@ -1,7 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import boardData from '../../helpers/data/boardData';
+import pinData from '../../helpers/data/pinData';
 
+import Pin from '../Pin/Pin';
+// pins render within singleBoard
+// pins will be in state
 
 class SingleBoard extends React.Component {
   static propTypes = {
@@ -11,6 +15,7 @@ class SingleBoard extends React.Component {
 
   state = {
     board: {},
+    pins: [],
   }
 
   componentDidMount() {
@@ -18,6 +23,11 @@ class SingleBoard extends React.Component {
     boardData.getSingleBoard(selectedBoardId)
       .then((request) => {
         this.setState({ board: request.data });
+        pinData.getPinsByBoardId(selectedBoardId)
+          .then((pins) => {
+            this.setState({ pins });
+          })
+          .catch((errorFromGetPins) => console.error({ errorFromGetPins }));
       })
       .catch((errorFromGetSingleBoard) => console.error(errorFromGetSingleBoard));
   }
@@ -29,7 +39,7 @@ class SingleBoard extends React.Component {
   }
 
   render() {
-    const { board } = this.state;
+    const { board, pins } = this.state;
     return (
     <div>
       <button className="btn btn-info" onClick={this.removeSelectedBoardId}>x Close Board View</button>
@@ -37,7 +47,7 @@ class SingleBoard extends React.Component {
         <h2>{board.name}</h2>
         <p>{board.description}</p>
         <div className="d-flex flex-wrap">
-          {/* all pins */}
+          { pins.map((pin) => <Pin pin={pin}/>)}
         </div>
       </div>
     </div>
